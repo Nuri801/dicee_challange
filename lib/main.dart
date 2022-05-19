@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 void main() {
   runApp(const MyApp());
@@ -12,14 +13,62 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Dicee',
       home: Scaffold(
+        backgroundColor: Colors.red,
         appBar: AppBar(
-          title: Text('Dicee'),
+          title: Center(child: Text('Dicee')),
+          backgroundColor: Colors.red,
         ),
+        body: Dices(),
       ),
     );
   }
 }
 
+class Dices extends StatefulWidget {
+  const Dices({Key? key}) : super(key: key);
+
+  @override
+  State<Dices> createState() => _DicesState();
+}
+
+int randomNumber() {
+  Random random = Random();
+  int randomNumber = random.nextInt(6) + 1;
+  return randomNumber;
+}
+
+int diceNumberOne = 1;
+int diceNumberTwo = 1;
+
+class _DicesState extends State<Dices> {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: MaterialButton(
+          onPressed: () {
+            randomNumber();
+            setState(() {
+              diceNumberOne = randomNumber();
+            });
+            randomNumber();
+            setState(() {
+              diceNumberTwo = randomNumber();
+            });
+          },
+          child: Row(
+            children: [
+              Expanded(child: Image.asset('dices_pics/dice$diceNumberOne.png')),
+              SizedBox(width: 8.0),
+              Expanded(child: Image.asset('dices_pics/dice$diceNumberTwo.png')),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 
 // import 'package:flutter/material.dart';
